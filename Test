@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+echo "[*] Installing dnsmasq..."
+apt update -y && apt install dnsmasq -y
+
+echo "[*] Creating adblock config for Spotify & YouTube..."
+cat <<EOF > /etc/dnsmasq.d/adblock.conf
+address=/ads-fa.spotify.com/0.0.0.0
+address=/audio-ads.spotify.com/0.0.0.0
+address=/pagead2.googlesyndication.com/0.0.0.0
+address=/googleads.g.doubleclick.net/0.0.0.0
+EOF
+
+echo "[*] Disabling systemd-resolved (if active)..."
+if systemctl is-active --quiet systemd-resolved; then
+    systemctl stop systemd-resolved
+    systemctl disable systemd-resolved
+    rm -f /etc/resolv.conf
+    echo "nameserver 127.0.0.1" > /etc/resolv.conf
+fi
+
+echo "[*] Restarting dnsmasq..."
+systemctl restart dnsmasq && echo "[+] Done. Ads blocked!"

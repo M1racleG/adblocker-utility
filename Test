@@ -5,11 +5,34 @@ echo "[*] Installing dnsmasq..."
 apt update -y && apt install dnsmasq -y
 
 echo "[*] Creating adblock config for Spotify & YouTube..."
+
 cat <<EOF > /etc/dnsmasq.d/adblock.conf
+# ===== Spotify Ads =====
 address=/ads-fa.spotify.com/0.0.0.0
 address=/audio-ads.spotify.com/0.0.0.0
 address=/pagead2.googlesyndication.com/0.0.0.0
 address=/googleads.g.doubleclick.net/0.0.0.0
+address=/pubads.g.doubleclick.net/0.0.0.0
+address=/partnerad.l.doubleclick.net/0.0.0.0
+address=/ads.spotify.com/0.0.0.0
+address=/analytics.spotify.com/0.0.0.0
+address=/spclient.wg.spotify.com/0.0.0.0
+address=/heads-fa.spotify.com/0.0.0.0
+address=/track.adform.net/0.0.0.0
+address=/adclick.g.doubleclick.net/0.0.0.0
+address=/adeventtracker.spotify.com/0.0.0.0
+
+# ===== YouTube Ads =====
+address=/googleads.g.doubleclick.net/0.0.0.0
+address=/pagead2.googlesyndication.com/0.0.0.0
+address=/pubads.g.doubleclick.net/0.0.0.0
+address=/video-ad-stats.l.google.com/0.0.0.0
+address=/youtubeads.googleapis.com/0.0.0.0
+address=/yt3.ggpht.com/0.0.0.0
+address=/yt.adserver.google.com/0.0.0.0
+address=/ytstatic.l.google.com/0.0.0.0
+address=/s.youtube.com/0.0.0.0
+address=/ads.youtube.com/0.0.0.0
 EOF
 
 echo "[*] Disabling systemd-resolved (if active)..."
